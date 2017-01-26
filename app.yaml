@@ -1,0 +1,17 @@
+application: vlc-client-telegram
+version: beta
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: .*
+  script: bot.app
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+- name: setuptools
+  version: "0.6c11"
+- name: ssl
+  version: "2.7"
