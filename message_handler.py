@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 from telegram import Bot
 from telegram.ext import Dispatcher, CommandHandler
 from credentials import TOKEN
-from handlers.handlers import error, help, start, list_activities, get_activity, update_activity, list_visits
+from handlers.handlers import error, help, start, list_activities, get_activity_progress, update_activity, \
+    list_appointments
 
 
 def setup():
@@ -25,9 +26,9 @@ def setup():
     dispatcher.add_handler(CommandHandler("help", help))
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("listactivities", list_activities))
-    dispatcher.add_handler(CommandHandler("getactivity", get_activity, pass_args=True))
+    dispatcher.add_handler(CommandHandler("getactivity", get_activity_progress, pass_args=True))
     dispatcher.add_handler(CommandHandler("updateactivity", update_activity, pass_args=True))
-    dispatcher.add_handler(CommandHandler("listvisits", list_visits))
+    dispatcher.add_handler(CommandHandler("listvisits", list_appointments))
     return dispatcher
 
 
