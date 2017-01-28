@@ -48,7 +48,7 @@ def update_activity(bot, update, args):
     # args[1] should be the new activity value
     chat_id = update.message.chat_id
     try:
-        api_call = partial(update_activity_progress_req, str(chat_id), args[0], args[1])
+        api_call = partial(update_activity_progress_req, args[0], args[1])
 
         def success(result):
             if result:

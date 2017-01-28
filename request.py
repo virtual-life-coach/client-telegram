@@ -31,7 +31,7 @@ def list_appointments_req(telegram_id):
     return response.get('items')
 
 
-def update_activity_progress_req(telegram_id, activity_id, value):
-    url_path = "activity/" + telegram_id + "/" + activity_id + "/" + value
+def update_activity_progress_req(activity_id, value):
+    url_path = "activity/" + activity_id + "/" + value
     request = urlfetch.fetch(endpoint + url_path, headers=headers, method=urlfetch.PUT)
     return request.status_code == httplib.NO_CONTENT
