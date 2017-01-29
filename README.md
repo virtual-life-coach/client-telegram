@@ -16,8 +16,8 @@ The project was developed individually.
 
 The project repository is made up of the following *files* and **folders**:
 * **handlers**: handlers for client requests
-    *handlers.py*: handler for bot commands
-    *hook_handler.py*: handler for incoming messages
+    * *handlers.py*: handler for bot commands
+    * *hook_handler.py*: handler for incoming messages
 * **lib**: bot dependencies (must be deployed to avoid problems on GAE)
 * *app.yaml*: GAE deployment descriptor
 * *appengine_config.py*: required to include custom libraries into GAE environment
