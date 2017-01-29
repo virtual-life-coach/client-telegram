@@ -1,5 +1,5 @@
 application: vlc-client-telegram
-version: theta
+version: lambda
 runtime: python27
 api_version: 1
 threadsafe: yes

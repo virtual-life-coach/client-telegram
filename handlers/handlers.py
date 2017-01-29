@@ -24,7 +24,13 @@ def list_activities(bot, update):
     api_call = partial(list_activities_req, str(chat_id))
 
     def success(result):
-        bot.sendMessage(chat_id, "Success: " + str(result))
+        if result:
+            content = "This is the list of your activities. Hold on!\n"
+            content += "\n".join(map(lambda a: repr_activity(a), result))
+            bot.sendMessage(chat_id, content)
+        else:
+            bot.sendMessage(chat_id, "You have completed all the activities: I am so proud of you. "
+                                     "Wait tomorrow for a new one!")
 
     execute_request(api_call, success, partial(send_failure_message, bot, chat_id))
 
@@ -36,7 +42,7 @@ def get_activity_progress(bot, update, args):
         api_call = partial(get_activity_progress_req, args[0])
 
         def success(result):
-            bot.sendMessage(chat_id, "Success: " + str(result))
+            bot.sendMessage(chat_id, repr_activity(result))
 
         execute_request(api_call, success, partial(send_failure_message, bot, chat_id))
     except (IndexError, ValueError):
@@ -52,9 +58,9 @@ def update_activity(bot, update, args):
 
         def success(result):
             if result:
-                bot.sendMessage(chat_id, "Activity successfully updated")
+                bot.sendMessage(chat_id, "Activity successfully updated.")
             else:
-                bot.sendMessage(chat_id, "Unable to update activity")
+                bot.sendMessage(chat_id, "Unable to update activity.")
 
         execute_request(api_call, success, partial(send_failure_message, bot, chat_id))
     except (IndexError, ValueError):
@@ -66,7 +72,12 @@ def list_appointments(bot, update):
     api_call = partial(list_appointments_req, str(chat_id))
 
     def success(result):
-        bot.sendMessage(chat_id, "Success: " + str(result))
+        if result:
+            content = "This is the list of your future appointments!\n"
+            content += "\n".join(map(lambda a: repr_appointment(a), result))
+            bot.sendMessage(chat_id, content)
+        else:
+            bot.sendMessage(chat_id, "You have no appointment scheduled.")
 
     execute_request(api_call, success, partial(send_failure_message, bot, chat_id))
 
@@ -84,3 +95,18 @@ def execute_request(api_call, on_success, on_failure):
 
 def send_failure_message(bot, chat_id, error_message):
     bot.sendMessage(chat_id, "An error occurred while executing request: " + error_message)
+
+
+def repr_activity(activity):
+    return "Id: " + str(activity.get("id")) + \
+           "\nTask: " + activity.get("details") + \
+           "\nDeadline: " + activity.get("deadlineDate") + \
+           "\nTarget value: " + activity.get("targetValue") + \
+           "\nCurrent value: " + activity.get("currentValue") + \
+           "\nCompleted: " + str(activity.get("completed"))
+
+
+def repr_appointment(appointment):
+    return "Doctor id: " + str(appointment.get("doctorId")) + \
+           "\nDate: " + appointment.get("date") + \
+           "\nLocation: " + appointment.get("location")
